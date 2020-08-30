@@ -20,9 +20,7 @@ class RTCVideoRenderer {
   VideoRotationChangeCallback onVideoRotationChanged;
   dynamic onFirstFrameRendered;
   var isFirstFrameRendered = false;
-
   dynamic onStateChanged;
-
   HtmlElementView htmlElementView;
   HTML.VideoElement _htmlVideoElement;
 
@@ -81,7 +79,7 @@ class RTCVideoRenderer {
     ui.platformViewRegistry.registerViewFactory(stream.id, (int viewId) {
       final x = HTML.VideoElement();
       x.autoplay = true;
-      x.muted = false;
+      x.muted = _srcObject.ownerTag == 'local';
       x.srcObject = stream.jsStream;
       x.id = stream.id;
       _htmlVideoElement = x;
@@ -149,6 +147,7 @@ class RTCVideoRenderer {
 
   Future<Null> dispose() async {
     //TODO?
+    //https://stackoverflow.com/questions/3258587/how-to-properly-unload-destroy-a-video-element/28060352
   }
 }
 
